@@ -2,13 +2,16 @@ package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)//createOrderItem가 아닌 다른 생성자 금지
 public class OrderItem {
 
     @Id @GeneratedValue
@@ -28,4 +31,29 @@ public class OrderItem {
 
     private int count;//주문 수량
 
+    //==생성 메서드==//
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+
+    //==비지니스 로직==//
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    //==조회 로직==//
+
+    /**
+     * 주문 상품 전체 가격 조회
+     */
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 }

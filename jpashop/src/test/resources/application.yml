@@ -1,0 +1,27 @@
+#applicattion.properties와 같은 역활
+#테스트를 할 경우 이 파일이 우선권을 가짐
+
+spring:
+#  datasource:
+#메모리 DB로 돌리는 설정 이지만 스프링 부트에선 없을경우 메모리로 디비를 돌림!
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+  output:
+    ansi:
+      enabled: always
+#
+#  jpa:
+#    hibernate:
+#      #아래 옵션은 애플리케이션 실행 시점에 테이블을 drop 하고, 다시 생성한다
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#  # show_sql: true
+#        format_sql: true
+#    open-in-view: false
+
+logging.level:
+  org.hibernate.SQL: debug
+  #org.hibernate.orm.jdbc.bind: trace  #스프링 부트 3.x, hibernate6: 옵션은 logger를 통해 하이버네이트 실행 SQL을 남긴다.

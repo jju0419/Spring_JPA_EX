@@ -27,6 +27,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-devtools'
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'//쿼리 파라미터 로그에 남김
+	implementation 'org.springframework.boot:spring-boot-starter-validation' //@NotEmpty
+
+
 	testImplementation 'junit:junit:4.13.1'//한페이지 별로 리-컴파일해줌(서버 내렸다 올릴 필요X)
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'

@@ -2,6 +2,7 @@ package jpabook.jpashop.domain.item;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public abstract class Item {//영화 책 앨범으로 나누어야 하기때문�
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    private long id;
+    private Long id;
 
     private String name;
     private int price;
@@ -27,6 +28,27 @@ public abstract class Item {//영화 책 앨범으로 나누어야 하기때문�
 
     @ManyToMany(mappedBy = "items") //ManyToMany 실무에선 추천되지 않음
     private List<Category> categories = new ArrayList<>();
+
+    //==비지니스 로직==//
+    //stockQuantity를 가지고있는 이곳에서 핵심 비지니스 로직을 사용하는것이 객체지향적으로 좋다
+    //stockQuantity를 직접 컨트롤 해야 함으로
+    /**
+     * Stock 증가
+     */
+    public void addStock(int quantity){
+        this.stockQuantity += quantity;
+    }
+
+    /**
+     * Stock 감소
+     */
+    public void removeStock(int quantity){
+        int restStock = this.stockQuantity - quantity;
+        if(restStock < 0){
+            throw new NotEnoughStockException("need more stock"); //Exception을 직접 작성
+        }
+        this.stockQuantity =restStock;
+    }
 
 
 }
