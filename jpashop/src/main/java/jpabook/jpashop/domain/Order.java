@@ -80,7 +80,8 @@ public class Order {
             throw  new IllegalStateException("이미 배송된 상품은 취소가 불가능 합니다.");
         }
 
-        this.setStatus(OrderStatus.CANCEL);
+        this.setStatus(OrderStatus.CANCEL);//트랜잭션 커밋 시점에 변경 감지(Dirty Checking)이 동작해서 데이터베이스에 UPDATE SQL 실행
+
         for(OrderItem orderItem : orderItems){
             orderItem.cancel();
         }

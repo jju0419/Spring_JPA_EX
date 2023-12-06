@@ -44,7 +44,7 @@ public class MemberService {
     //회원 전체 조회
 
     @Transactional(readOnly = true) //(readOnly = true)의 경우 (출력만 하는 경우) Jpa가 최적화 해줌
-    public  List<Member> findMember(){
+    public  List<Member> findMembers(){
         return  memberRepository.findAll();
     }
 

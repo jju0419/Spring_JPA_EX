@@ -73,19 +73,25 @@ public class ItemController {
     //@ModelAttribute는 사용자가 요청시 전달하는 값을 오브젝트 형태로 매핑해주는 어노테이션
     @PostMapping("item/{itemId}/edit")
     public String updateitem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form){
-        //새롭게 만들어서 새롭게 등록해주는것
+        //DB를 가져오는게 아닌 새롭게 만들어서 새롭게 등록해주는것 (준영속 엔티티 : 수정을 하려면 merge 사용)
         Book book = new Book();
 
         //아이디가 파라미터로 넘어오기때문에 보안에 취약 검증하는 로직 필요
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setAuthor(form.getAuthor());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setIsbn(form.getIsbn());
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setAuthor(form.getAuthor());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setIsbn(form.getIsbn());
+//        itemService.saveItem(book);
 
-        itemService.saveItem(book);
+        /**
+         * 상품 수정, 권장 코드
+         */
+        itemService.updateItem(itemId, form.getName(), form.getPrice(),
+                form.getStockQuantity());
         return "redirect:/items";
+
 
     }
 }

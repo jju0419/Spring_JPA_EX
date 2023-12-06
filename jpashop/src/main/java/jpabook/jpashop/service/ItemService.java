@@ -20,11 +20,23 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+
     public List<Item> findItems() {
         return itemRepository.findAll();
     }
 
     public Item findOne(Long itemId) {
         return itemRepository.findOne(itemId);
+    }
+
+
+    /**
+     * 영속성 컨텍스트가 자동 변경 Dto만들어서 setter몰아두는게 더 권장됨
+     */
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+        Item item = itemRepository.findOne(itemId);
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
     }
 }
