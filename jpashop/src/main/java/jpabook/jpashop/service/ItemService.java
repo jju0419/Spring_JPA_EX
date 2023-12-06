@@ -33,6 +33,7 @@ public class ItemService {
     /**
      * 영속성 컨텍스트가 자동 변경 Dto만들어서 setter몰아두는게 더 권장됨
      */
+    @Transactional
     public void updateItem(Long itemId, String name, int price, int stockQuantity) {
         Item item = itemRepository.findOne(itemId);
         item.setName(name);
